@@ -46,7 +46,7 @@
         {!! Form::hidden('type', 1) !!}
         <h3 class="col-lg-12 font-chewy text-pink font-size-35">Informações do bebê</h3>
         <div class="col-lg-6">{!! Form::text('babyName', '', ['placeholder' => 'Nome:', 'id' => 'babyName', 'maxlength' => '100']) !!}</div>
-        <div class="col-lg-3">{!! Form::text('babyBirthdate', '', ['placeholder' => 'Data de Nascimento:', 'id' => 'babyBirthdate', 'maxlength' => '10', 'data-mask' => '00/00/0000', 'data-mask-reverse' => true]) !!}</div>
+        <div class="col-lg-3">{!! Form::text('babyBirthdate', '', ['placeholder' => 'Data de Nascimento:', 'id' => 'babyBirthdate', 'maxlength' => '10', 'data-mask' => '00/00/0000']) !!}</div>
         <div class="col-lg-3 margin-top-7">
             <span class="pull-left margin-right-10">Sexo:</span>
             <label class="pull-left margin-right-10 normal">

@@ -45,11 +45,11 @@
         <div class="container">
             <div class="col-lg-6 col-lg-offset-5">
                 @if(Auth::check() and Auth::getUser()->type == 1)
-                <a href="#" class="btn-logged btn-edit" title="Editar meus dados">Editar meus dados</a>
+                <a href="#" class="btn-logged btn-edit" data-toggle="modal" data-target="#profileModal" title="Editar meus dados">Editar meus dados</a>
                 <a href="#" class="btn-logged btn-upload" title="Upload foto/vídeo">Upload foto/vídeo</a>
                 <a href="{{ url('sair') }}" class="btn-logged btn-logout" title="Sair">Sair</a>
                 @else
-                <a href="#" class="bg-white btn-login" data-toggle="modal" data-target="#loginModal">
+                <a href="#" class="bg-white btn-login" data-toggle="modal" data-target="#loginModal" title="Fazer login">
                     <span>Fazer login</span>
                 </a>
                 @endif
@@ -248,6 +248,160 @@
                         {!! Form::submit('Enviar') !!}
                         <p class="text-pink font-size-11 normal">Exemplo: andre@hotmail.com</p>
                     </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+@if(Auth::check() and Auth::getUser()->type == 1)
+<div id="profileModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar meus dados</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body row">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#babyAndResponsableInformation" aria-controls="babyAndResponsableInformation" role="tab" data-toggle="tab">Informações do bebê e responsável</a></li>
+                    <li role="presentation"><a href="#addressAndPhonesInformation" aria-controls="addressAndPhonesInformation" role="tab" data-toggle="tab">Informações de endereço e telefones</a></li>
+                </ul>
+                {!! Form::open(['class' => 'form-profile']) !!}
+                {!! Form::hidden('userId', Auth::user()->id) !!}
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="babyAndResponsableInformation">
+                        <label class="col-lg-4" for="babyName">
+                            <strong>Informações do Bebê:</strong>
+                            <p id="babyName">{{ Auth::getUser()->babyName }}</p>
+                            {!! Form::text('babyName', Auth::getUser()->babyName, ['id' => 'babyName', 'placeholder' => 'Nome do Bebê', 'maxlength' => '100', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-3" for="babyBirthdate">
+                            <strong>Data de nasc:</strong>
+                            <p id="babyBirthdate">{{ \Carbon\Carbon::createFromFormat('Y-m-d', Auth::getUser()->babyBirthdate)->format('d/m/Y') }}</p>
+                            {!! Form::text('babyBirthdate', \Carbon\Carbon::createFromFormat('Y-m-d', Auth::getUser()->babyBirthdate)->format('d/m/Y'), ['id' => 'babyBirthdate', 'placeholder' => 'dd/mm/aaaa', 'maxlength' => '10', 'data-mask' => '00/00/0000', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-3" for="babyGender">
+                            <strong>Sexo:</strong>
+                            <p id="babyGender">{{ Auth::user()->babyGender }}</p>
+                            <select name="babyGender" id="babyGender" required="required">
+                                <option value="Feminino" @if(Auth::user()->babyGender == 'Feminino'){{ 'selected' }}@endif>Feminino</option>
+                                <option value="Masculino" @if(Auth::user()->babyGender == 'Masculino'){{ 'selected' }}@endif>Masculino</option>
+                            </select>
+                        </label>
+                        <div class="clear"></div>
+                        <label class="col-lg-4" for="name">
+                            <strong>Informações do Responsável:</strong>
+                            <p id="name">{{ Auth::getUser()->name }}</p>
+                            {!! Form::text('name', Auth::getUser()->name, ['id' => 'name', 'placeholder' => 'Nome do Responsável', 'maxlength' => '100', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-3" for="rg">
+                            <strong>RG:</strong>
+                            <p id="rg">{{ Auth::user()->rg }}</p>
+                            {!! Form::text('rg', Auth::user()->rg, ['id' => 'rg', 'maxlength' => '25', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-3" for="cpf">
+                            <strong>CPF:</strong>
+                            <p id="cpf">{{ Auth::user()->cpf }}</p>
+                            {!! Form::text('cpf', Auth::user()->cpf, ['placeholder' => 'CPF:', 'id' => 'cpf', 'maxlength' => '14', 'data-mask' => '000.000.000-00', 'required' => 'required']) !!}
+                        </label>
+                        <div class="clear"></div>
+                        <label class="col-lg-4" for="email">
+                            <strong>E-mail:</strong>
+                            <p id="email">{{ Auth::user()->email }}</p>
+                            {!! Form::text('email', Auth::user()->email, ['id' => 'email', 'maxlength' => '40', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-3" for="gender">
+                            <strong>Sexo:</strong>
+                            <p id="gender">{{ Auth::user()->gender }}</p>
+                            <select name="gender" id="gender" required="required">
+                                <option value="Feminino" @if(Auth::user()->gender == 'Feminino'){{ 'selected' }}@endif>Feminino</option>
+                                <option value="Masculino" @if(Auth::user()->gender == 'Masculino'){{ 'selected' }}@endif>Masculino</option>
+                            </select>
+                        </label>
+                        <small class="col-lg-2 col-lg-offset-3">
+                            Para editar alguma informação, basta clicar sobre o campo desejado
+                            e depois pressionar enter.
+                        </small>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="addressAndPhonesInformation">
+                        <label class="col-lg-10" for="address">
+                            <strong>Endereço:</strong>
+                            <p id="address">{{ Auth::user()->address }}</p>
+                            {!! Form::text('address', Auth::user()->address, ['id' => 'address', 'placeholder' => 'Rua, Avenida, Rodovia, etc..', 'maxlength' => '150', 'required' => 'required']) !!}
+                        </label>
+                        <div class="clear"></div>
+                        <label class="col-lg-1" for="number">
+                            <strong>Nº:</strong>
+                            <p id="number">{{ Auth::user()->number }}</p>
+                            {!! Form::text('number', Auth::user()->number, ['id' => 'number', 'maxlength' => '10', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-4" for="complement">
+                            <strong>Complemento:</strong>
+                            <p id="complement">
+                                @if(empty(Auth::user()->complement))
+                                {{ '- - -' }}
+                                @else
+                                {{ Auth::user()->complement }}
+                                @endif
+                            </p>
+                            {!! Form::text('complement', Auth::user()->complement, ['id' => 'complement', 'maxlength' => '50']) !!}
+                        </label>
+                        <label class="col-lg-5" for="district">
+                            <strong>Bairro:</strong>
+                            <p id="district">{{ Auth::user()->district }}</p>
+                            {!! Form::text('district', Auth::user()->district, ['id' => 'district', 'maxlength' => '50', 'required' => 'required']) !!}
+                        </label>
+                        <div class="clear"></div>
+                        <label class="col-lg-1" for="state">
+                            <strong>UF:</strong>
+                            <p id="state">{{ Auth::user()->state }}</p>
+                            <?php
+                                //STATES
+                                $statesConsult = \App\Exceptions\Handler::readFile("states.json");
+                                foreach($statesConsult as $state):
+                                    $states[$state['uf']] = $state['uf'];
+                                endforeach;
+                            ?>
+                            {!! Form::select('state', $states, Auth::user()->state) !!}
+                        </label>
+                        <label class="col-lg-4" for="city">
+                            <strong>Cidade:</strong>
+                            <p id="city">{{ Auth::user()->city }}</p>
+                            {!! Form::text('city', Auth::user()->city, ['id' => 'city', 'maxlength' => '100', 'required' => 'required']) !!}
+                        </label>
+                        <label class="col-lg-5 remove-padding" for="phone">
+                            <label class="col-lg-6" for="phone">
+                                <strong>Tel. fixo:</strong>
+                                <p id="phone">
+                                    @if(empty(Auth::user()->phone))
+                                    {{ '- - -' }}
+                                    @else
+                                    {{ Auth::user()->phone }}
+                                    @endif
+                                </p>
+                                {!! Form::text('phone', Auth::user()->phone, ['id' => 'phone', 'maxlength' => '14', 'data-mask' => '(00) 0000-0000', 'required' => 'required']) !!}
+                            </label>
+                            <label class="col-lg-6" for="mobile">
+                                <strong>Celular:</strong>
+                                <p id="mobile">
+                                    @if(empty(Auth::user()->mobile))
+                                    {{ '- - -' }}
+                                    @else
+                                    {{ Auth::user()->mobile }}
+                                    @endif
+                                </p>
+                                {!! Form::text('mobile', Auth::user()->mobile, ['id' => 'mobile', 'maxlength' => '15', 'data-mask' => '(00) 0000-00009', 'required' => 'required']) !!}
+                            </label>
+                        </label>
+                        <small class="col-lg-2">
+                            Para editar alguma informação, basta clicar sobre o campo desejado
+                            e depois pressionar enter.
+                        </small>
+                    </div>
+                </div>
                 {!! Form::close() !!}
             </div>
         </div>

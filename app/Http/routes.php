@@ -11,6 +11,9 @@ Route::post('recuperar-senha/nova', ['as' => 'passwordReset', 'uses' => 'Auth\Pa
 ## LOGIN WEBSITE
 Route::post('login', 'Auth\AuthController@postLoginWebsite');
 
+## PROFILE
+Route::put('profile', 'Website\ProfileController@putUpdate');
+
 ## LOGOUT WEBSITE
 Route::get('sair', 'Auth\AuthController@getLogout');
 
