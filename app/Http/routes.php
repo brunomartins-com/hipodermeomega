@@ -54,6 +54,11 @@ Route::get('inscricao', 'Website\RegistrationController@index');
 Route::post('inscricao', 'Auth\AuthController@postRegister');
 Route::get('inscricao/confirmacao/{token?}', 'Website\RegistrationController@getConfirmation');
 
+## FINALISTS
+Route::get('finalistas', 'Website\FinalistsController@index');
+
+## WINNERS
+Route::get('vencedores', 'Website\WinnersController@index');
 
 Route::group(['middleware' => 'guest'], function () {
 

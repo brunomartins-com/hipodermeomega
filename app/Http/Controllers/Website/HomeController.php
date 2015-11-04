@@ -107,7 +107,7 @@ class HomeController extends Controller
                                     Image::make($file)->resize(800, null, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->save($folder . $nameImage);
-                                    Image::make($file)->resize(null, 100, function ($constraint) {
+                                    Image::make($file)->resize(null, 231, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->save($folder . "thumb_" . $nameImage);
                                     $photoAdd->photo = $nameImage;

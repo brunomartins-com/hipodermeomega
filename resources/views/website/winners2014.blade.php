@@ -33,7 +33,7 @@
             <img src="{{ asset('assets/images/_upload/ganhadores-2014/'.$winner->photo) }}" alt="{{ $winner->name }}" />
             <strong>{{ $winner->name }}</strong>
             <b>{{ $winner->city." - ".$winner->state }}</b>
-            <em>{{ $winner->quantityVotes }} votes</em>
+            <em>{{ $winner->quantityVotes }} votos</em>
         </div>
         @endforeach
     </div>

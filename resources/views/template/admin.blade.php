@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>@yield('title') Bruno Martins - Web Developer</title>
+    <title>@yield('title') Concurso Bebê Hipoderme 12ª Edição</title>
 
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
