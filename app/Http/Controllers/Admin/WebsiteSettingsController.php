@@ -85,17 +85,18 @@ class WebsiteSettingsController extends Controller
         $websiteSettings->title             = $request->title;
         $websiteSettings->email             = $request->email;
         $websiteSettings->certificate       = $request->certificate;
+        $websiteSettings->callText          = $request->callText;
+        $websiteSettings->buttonText        = $request->buttonText;
+        $websiteSettings->buttonUrl         = $request->buttonUrl;
         $websiteSettings->facebook          = $request->facebook;
         $websiteSettings->instagram         = $request->instagram;
         $websiteSettings->twitter           = $request->twitter;
         $websiteSettings->youtube           = $request->youtube;
         $websiteSettings->googleAnalytics   = $request->googleAnalytics;
         $websiteSettings->websiteOk         = $request->websiteOk;
+        $websiteSettings->registerOk        = $request->registerOk;
         $websiteSettings->votingOk          = $request->votingOk;
         $websiteSettings->winnersOk         = $request->winnersOk;
-        $websiteSettings->callText          = $request->callText;
-        $websiteSettings->buttonText        = $request->buttonText;
-        $websiteSettings->buttonUrl         = $request->buttonUrl;
 
         if ($request->favicon) {
             //DELETE OLD FAVICON

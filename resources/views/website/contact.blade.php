@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-12">
+    <div class="col-xs-12">
         @if (Session::has('success'))
         <br />
         <div class="alert alert-warning alert-dismissable">
@@ -30,8 +30,8 @@
         </div>
         @endif
     </div>
-    <div class="col-lg-7 col-lg-offset-1 text-pink font-size-16 strong">
-        <p class="col-lg-12">
+    <div class="col-xs-7 col-xs-offset-1 text-pink font-size-16 strong">
+        <p class="col-xs-12">
             Você pode entrar em contato conosco pelo formulário abaixo para sanar todas as suas dúvidas relacionadas ao concurso.
             <br />
             <br />
@@ -44,16 +44,16 @@
             'url' => url('contato')
             ])
         !!}
-        <div class="col-lg-12">{!! Form::text('name', '', ['placeholder' => 'Nome:', 'id' => 'name', 'maxlength' => '100']) !!}</div>
-        <div class="col-lg-12">{!! Form::email('email', '', ['placeholder' => 'E-mail:', 'id' => 'email', 'maxlength' => '40']) !!}</div>
-        <div class="col-lg-3">
+        <div class="col-xs-12">{!! Form::text('name', '', ['placeholder' => 'Nome:', 'id' => 'name', 'maxlength' => '100']) !!}</div>
+        <div class="col-xs-12">{!! Form::email('email', '', ['placeholder' => 'E-mail:', 'id' => 'email', 'maxlength' => '40']) !!}</div>
+        <div class="col-xs-3">
             {!! Form::select('state', $states) !!}
         </div>
-        <div class="col-lg-7">
+        <div class="col-xs-7">
             {!! Form::select('city', [''=>'Escolha o Estado primeiro']) !!}
         </div>
-        <div class="col-lg-10">{!! Form::textarea('message', '', ['placeholder' => 'Mensagem:', 'id' => 'message', 'rows' => '10']) !!}</div>
-        <div class="col-lg-2 text-right">{!! Form::submit('Enviar') !!}</div>
+        <div class="col-xs-10">{!! Form::textarea('message', '', ['placeholder' => 'Mensagem:', 'id' => 'message', 'rows' => '10']) !!}</div>
+        <div class="col-xs-2 text-right">{!! Form::submit('Enviar') !!}</div>
         {!! Form::close() !!}
     </div>
 </div>

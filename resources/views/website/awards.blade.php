@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-10 col-lg-offset-1 text-pink font-size-16 strong">
+    <div class="col-xs-10 col-xs-offset-1 text-pink font-size-16 strong">
         <p>
             30 bebês serão escolhidos e vão para a etapa de votação popular. Desses, 10 para a categoria foto e 10 para a categoria vídeo.
             Os 3 bebês mais votados na plataforma do Instagram em cada categoria receberão, cada um, um dos prêmios na seguinte ordem:

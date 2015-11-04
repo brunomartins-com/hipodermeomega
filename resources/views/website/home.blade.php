@@ -41,14 +41,14 @@
     <div class="table"></div>
 </div>
 <div class="container">
-    <div class="col-lg-4 col-lg-offset-1">
+    <div class="col-xs-4 col-xs-offset-1">
         <h2 class="font-size-35 text-pink font-chewy">
             {!! nl2br(e($websiteSettings['callText'])) !!}
         </h2>
         <a href="{{ $websiteSettings['buttonUrl'] }}" class="btn btn-pink" title="{{ $websiteSettings['buttonText'] }}">{{ $websiteSettings['buttonText'] }}</a>
     </div>
     @foreach($calls as $call)
-    <div class="col-lg-3 calls">
+    <div class="col-xs-3 calls">
         @if($call->url != "")<a href="{{ $call->url }}" target="{{ $call->target }}" title="{{ $call->title }}">@endif
             <img src="{{ asset('assets/images/_upload/chamadas/'.$call->image) }}" alt="{{ $call->title }}" />
             <strong>{{ $call->title }}</strong>

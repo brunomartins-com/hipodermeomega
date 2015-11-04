@@ -17,6 +17,12 @@ class RegistrationController extends Controller
         $page = 'inscricao';
         //WEBSITE SETTINGS
         $websiteSettings = \App\Exceptions\Handler::readFile("websiteSettings.json");
+
+        if($websiteSettings['registerOk'] == 0){
+            $message = "A página que você tentou acessar está indisponível no momento ou não existe";
+            return redirect('/')->with(compact('message'));
+        }
+
         //STATES
         $statesConsult = \App\Exceptions\Handler::readFile("states.json");
         $states = ['' => 'UF'];

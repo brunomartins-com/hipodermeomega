@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-10 col-lg-offset-1 text-pink font-size-16 strong">
+    <div class="col-xs-10 col-xs-offset-1 text-pink font-size-16 strong">
         <p>
             Confira aqui os fofos e lindos vencedores do 12º Concurso Bebê Hipodereme de 2015.
             <br />

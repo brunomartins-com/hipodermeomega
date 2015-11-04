@@ -12,8 +12,8 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-10 col-lg-offset-1 text-pink font-size-16 strong">
-        <div class="col-lg-12 text-center">
+    <div class="col-xs-10 col-xs-offset-1 text-pink font-size-16 strong">
+        <div class="col-xs-12 text-center">
             <span class="sub-title">Leia atentamente o regulamento e entenda como funciona. Depois é só participar. Boa sorte!</span>
             <br />
             <br />

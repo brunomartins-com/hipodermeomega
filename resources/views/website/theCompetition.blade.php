@@ -12,10 +12,10 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-4 col-lg-offset-1">
+    <div class="col-xs-4 col-xs-offset-1">
         <img src="{{ asset('assets/images/_upload/o-concurso/'.$theCompetition->image) }}" alt="{{ $pages->title }}" />
     </div>
-    <div class="col-lg-6 text-pink font-size-16 strong">
+    <div class="col-xs-6 text-pink font-size-16 strong">
         {!! $theCompetition->text !!}
     </div>
 </div>

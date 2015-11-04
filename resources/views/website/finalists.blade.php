@@ -12,13 +12,13 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-10 col-lg-offset-1 text-pink font-size-16 strong">
-        <div class="col-lg-7 padding-left-0">
+    <div class="col-xs-10 col-xs-offset-1 text-pink font-size-16 strong">
+        <div class="col-xs-7 padding-left-0">
             Reta final de muita fofura. Confira aqui os lindos e lindas que estão selecionados para a fase final do concurso. Os autores das 3 imagens e 3 vídeos mais votados escolhidas pelo público pela plataforma Instagram®, serão os ganhadores.
             <br />
             <br />
         </div>
-        <div class="col-lg-5 padding-right-0 padding-left-20 normal">
+        <div class="col-xs-5 padding-right-0 padding-left-20 normal">
             <span class="instagramIcon"></span>
             Imagens disponíveis para votação na conta do Laboratório Teuto.
             <strong class="font-size-20">instagram.com/{{ $websiteSettings['instagram'] }}</strong>

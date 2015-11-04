@@ -30,26 +30,26 @@
 <header class="header">
     <div class="vectors"></div>
     <div class="container">
-        <div class="col-lg-4 col-lg-offset-5 welcome">
+        <div class="col-xs-4 col-xs-offset-5 welcome">
             @if(Auth::check() and Auth::getUser()->type == 1)
             <strong>Bem Vindo(a)</strong>
             <br />
             {{ Auth::getUser()->name }}
             @endif
         </div>
-        <div class="col-lg-2 sponsor">
+        <div class="col-xs-2 sponsor">
             <span class="text-pink">Oferecimento</span>
         </div>
     </div>
     <div class="top">
         <div class="container">
-            <div class="col-lg-6 col-lg-offset-5">
-                @if(Auth::check() and Auth::getUser()->type == 1)
+            <div class="col-xs-6 col-xs-offset-5">
+                @if(Auth::check() and Auth::getUser()->type == 1 and $websiteSettings['registerOk'] == 1)
                 <a href="#" class="btn-logged btn-edit" data-toggle="modal" data-target="#profileModal" title="Editar meus dados">Editar meus dados</a>
                 <a href="#" class="btn-logged btn-upload" data-toggle="modal" data-target="#warningModal" title="Upload foto/vídeo">Upload foto/vídeo</a>
                 <a href="{{ url('sair') }}" class="btn-logged btn-logout" title="Sair">Sair</a>
                 @else
-                <a href="#" class="bg-white btn-login" data-toggle="modal" data-target="#loginModal" title="Fazer login">
+                <a href="#" class="bg-white btn-login" @if($websiteSettings['registerOk'] == 1) data-toggle="modal" data-target="#loginModal"@else onclick="alert('Período de participação encerrado!')"@endif title="Fazer login">
                     <span>Fazer login</span>
                 </a>
                 @endif
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-lg-6 col-lg-offset-5">
+        <div class="col-xs-6 col-xs-offset-5">
             <nav class="navigation">
                 <ul>
                     <li><a href="{{ url('/') }}" class="home" title="Home">Home</a></li>
@@ -72,7 +72,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-lg-5 col-lg-offset-6">
+        <div class="col-xs-5 col-xs-offset-6">
             <div id="carousel-example-generic" class="carousel slide video-home" data-ride="carousel" data-interval="10000" data-pause="hover">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -112,7 +112,7 @@
 
 @if($page != 'home')
 <div class="container">
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="col-xs-10 col-xs-offset-1">
         <div class="buttons">
             <a href="{{ url('/') }}" title="Home">Home</a>
             <a href="#" title="Topo" class="topo">Topo</a>
@@ -124,7 +124,7 @@
         </div>
     </div>
     @foreach($calls as $key => $call)
-    <div class="col-lg-5 @if($key == 0){{ 'col-lg-offset-1' }}@endif calls">
+    <div class="col-xs-5 @if($key == 0){{ 'col-xs-offset-1' }}@endif calls">
         @if($call->url != "")<a href="{{ $call->url }}" target="{{ $call->target }}" title="{{ $call->title }}">@endif
             <img src="{{ asset('assets/images/_upload/chamadas/'.$call->image) }}" alt="{{ $call->title }}" />
             <span>
@@ -140,8 +140,8 @@
 
 <footer class="container">
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-2">{!! nl2br(e($websiteSettings['certificate'])) !!}</div>
-        <div class="col-lg-4">
+        <div class="col-xs-4 col-xs-offset-2">{!! nl2br(e($websiteSettings['certificate'])) !!}</div>
+        <div class="col-xs-4">
             {!! Form::open([
                     'id' => 'form-newsletter',
                     'method' => 'post',
@@ -155,15 +155,15 @@
             {!! Form::submit('Ok') !!}
             {!! Form::close() !!}
         </div>
-        <div class="col-lg-8 col-lg-offset-2 separate"><hr /></div>
-        <div class="col-lg-2 col-lg-offset-2">
+        <div class="col-xs-8 col-xs-offset-2 separate"><hr /></div>
+        <div class="col-xs-2 col-xs-offset-2">
             Acompanhe as novidades
             <br />
             do Laboratório Teuto através
             <br />
             das redes sociais.
         </div>
-        <div class="col-lg-5 social-network">
+        <div class="col-xs-5 social-network">
             <ul>
                 @if($websiteSettings['facebook'] != "")
                 <li>
@@ -187,12 +187,12 @@
                 @endif
             </ul>
         </div>
-        <div class="col-lg-1">
+        <div class="col-xs-1">
             <a href="http://www.teuto.com.br" target="_blank" class="teuto" title="Teuto/Pfizer">Teuto/Pfizer</a>
         </div>
     </div>
 </footer>
-@if(!Auth::check() or Auth::getUser()->type == 0)
+@if(!Auth::check() or Auth::getUser()->type == 0 and $websiteSettings['registerOk'] == 1)
 <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
@@ -235,7 +235,7 @@
                     'url' => url('recuperar-senha')
                     ])
                 !!}
-                    <div class="col-lg-5 pull-left" style="height: 200px;">
+                    <div class="col-xs-5 pull-left" style="height: 200px;">
                         <h5 class="font-size-24 font-chewy text-pink normal">Recuperação de senha</h5>
                         <p class="text-pink font-size-16 strong">
                             Informe o e-mail utilizado por você para acessar a página do concurso.
@@ -243,7 +243,7 @@
                             Uma mensagem será enviada para o seu e-mail alternativo cadastrado com as instruções para a criação de uma nova senha.
                         </p>
                     </div>
-                    <div class="col-lg-6 pull-right margin-top-20">
+                    <div class="col-xs-6 pull-right margin-top-20">
                         {!! Form::email('email', '', ['placeholder' => 'E-mail:', 'id' => 'email', 'maxlength' => '40']) !!}
                         {!! Form::submit('Enviar') !!}
                         <p class="text-pink font-size-11 normal">Exemplo: andre@hotmail.com</p>
@@ -254,7 +254,7 @@
     </div>
 </div>
 @endif
-@if(Auth::check() and Auth::getUser()->type == 1)
+@if(Auth::check() and Auth::getUser()->type == 1 and $websiteSettings['registerOk'] == 1)
 <div id="profileModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -273,17 +273,17 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="babyAndResponsableInformation">
-                        <label class="col-lg-4" for="babyName">
+                        <label class="col-xs-4" for="babyName">
                             <strong>Informações do Bebê:</strong>
                             <p id="babyName">{{ Auth::getUser()->babyName }}</p>
                             {!! Form::text('babyName', Auth::getUser()->babyName, ['id' => 'babyName', 'placeholder' => 'Nome do Bebê', 'maxlength' => '100', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-3" for="babyBirthdate">
+                        <label class="col-xs-3" for="babyBirthdate">
                             <strong>Data de nasc:</strong>
                             <p id="babyBirthdate">{{ \Carbon\Carbon::createFromFormat('Y-m-d', Auth::getUser()->babyBirthdate)->format('d/m/Y') }}</p>
                             {!! Form::text('babyBirthdate', \Carbon\Carbon::createFromFormat('Y-m-d', Auth::getUser()->babyBirthdate)->format('d/m/Y'), ['id' => 'babyBirthdate', 'placeholder' => 'dd/mm/aaaa', 'maxlength' => '10', 'data-mask' => '00/00/0000', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-3" for="babyGender">
+                        <label class="col-xs-3" for="babyGender">
                             <strong>Sexo:</strong>
                             <p id="babyGender">{{ Auth::user()->babyGender }}</p>
                             <select name="babyGender" id="babyGender" required="required">
@@ -292,28 +292,28 @@
                             </select>
                         </label>
                         <div class="clear"></div>
-                        <label class="col-lg-4" for="name">
+                        <label class="col-xs-4" for="name">
                             <strong>Informações do Responsável:</strong>
                             <p id="name">{{ Auth::getUser()->name }}</p>
                             {!! Form::text('name', Auth::getUser()->name, ['id' => 'name', 'placeholder' => 'Nome do Responsável', 'maxlength' => '100', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-3" for="rg">
+                        <label class="col-xs-3" for="rg">
                             <strong>RG:</strong>
                             <p id="rg">{{ Auth::user()->rg }}</p>
                             {!! Form::text('rg', Auth::user()->rg, ['id' => 'rg', 'maxlength' => '25', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-3" for="cpf">
+                        <label class="col-xs-3" for="cpf">
                             <strong>CPF:</strong>
                             <p id="cpf">{{ Auth::user()->cpf }}</p>
                             {!! Form::text('cpf', Auth::user()->cpf, ['placeholder' => 'CPF:', 'id' => 'cpf', 'maxlength' => '14', 'data-mask' => '000.000.000-00', 'required' => 'required']) !!}
                         </label>
                         <div class="clear"></div>
-                        <label class="col-lg-4" for="email">
+                        <label class="col-xs-4" for="email">
                             <strong>E-mail:</strong>
                             <p id="email">{{ Auth::user()->email }}</p>
                             {!! Form::text('email', Auth::user()->email, ['id' => 'email', 'maxlength' => '40', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-3" for="gender">
+                        <label class="col-xs-3" for="gender">
                             <strong>Sexo:</strong>
                             <p id="gender">{{ Auth::user()->gender }}</p>
                             <select name="gender" id="gender" required="required">
@@ -321,24 +321,24 @@
                                 <option value="Masculino" @if(Auth::user()->gender == 'Masculino'){{ 'selected' }}@endif>Masculino</option>
                             </select>
                         </label>
-                        <small class="col-lg-2 col-lg-offset-3">
+                        <small class="col-xs-2 col-xs-offset-3">
                             Para editar alguma informação, basta clicar sobre o campo desejado
                             e depois pressionar enter.
                         </small>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="addressAndPhonesInformation">
-                        <label class="col-lg-10" for="address">
+                        <label class="col-xs-10" for="address">
                             <strong>Endereço:</strong>
                             <p id="address">{{ Auth::user()->address }}</p>
                             {!! Form::text('address', Auth::user()->address, ['id' => 'address', 'placeholder' => 'Rua, Avenida, Rodovia, etc..', 'maxlength' => '150', 'required' => 'required']) !!}
                         </label>
                         <div class="clear"></div>
-                        <label class="col-lg-1" for="number">
+                        <label class="col-xs-1" for="number">
                             <strong>Nº:</strong>
                             <p id="number">{{ Auth::user()->number }}</p>
                             {!! Form::text('number', Auth::user()->number, ['id' => 'number', 'maxlength' => '10', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-4" for="complement">
+                        <label class="col-xs-4" for="complement">
                             <strong>Complemento:</strong>
                             <p id="complement">
                                 @if(empty(Auth::user()->complement))
@@ -349,13 +349,13 @@
                             </p>
                             {!! Form::text('complement', Auth::user()->complement, ['id' => 'complement', 'maxlength' => '50']) !!}
                         </label>
-                        <label class="col-lg-5" for="district">
+                        <label class="col-xs-5" for="district">
                             <strong>Bairro:</strong>
                             <p id="district">{{ Auth::user()->district }}</p>
                             {!! Form::text('district', Auth::user()->district, ['id' => 'district', 'maxlength' => '50', 'required' => 'required']) !!}
                         </label>
                         <div class="clear"></div>
-                        <label class="col-lg-1" for="state">
+                        <label class="col-xs-1" for="state">
                             <strong>UF:</strong>
                             <p id="state">{{ Auth::user()->state }}</p>
                             <?php
@@ -367,13 +367,13 @@
                             ?>
                             {!! Form::select('state', $states, Auth::user()->state) !!}
                         </label>
-                        <label class="col-lg-4" for="city">
+                        <label class="col-xs-4" for="city">
                             <strong>Cidade:</strong>
                             <p id="city">{{ Auth::user()->city }}</p>
                             {!! Form::text('city', Auth::user()->city, ['id' => 'city', 'maxlength' => '100', 'required' => 'required']) !!}
                         </label>
-                        <label class="col-lg-5 remove-padding" for="phone">
-                            <label class="col-lg-6" for="phone">
+                        <label class="col-xs-5 remove-padding" for="phone">
+                            <label class="col-xs-6" for="phone">
                                 <strong>Tel. fixo:</strong>
                                 <p id="phone">
                                     @if(empty(Auth::user()->phone))
@@ -384,7 +384,7 @@
                                 </p>
                                 {!! Form::text('phone', Auth::user()->phone, ['id' => 'phone', 'maxlength' => '14', 'data-mask' => '(00) 0000-0000', 'required' => 'required']) !!}
                             </label>
-                            <label class="col-lg-6" for="mobile">
+                            <label class="col-xs-6" for="mobile">
                                 <strong>Celular:</strong>
                                 <p id="mobile">
                                     @if(empty(Auth::user()->mobile))
@@ -396,7 +396,7 @@
                                 {!! Form::text('mobile', Auth::user()->mobile, ['id' => 'mobile', 'maxlength' => '15', 'data-mask' => '(00) 0000-00009', 'required' => 'required']) !!}
                             </label>
                         </label>
-                        <small class="col-lg-2">
+                        <small class="col-xs-2">
                             Para editar alguma informação, basta clicar sobre o campo desejado
                             e depois pressionar enter.
                         </small>
@@ -415,8 +415,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body row">
-                <div class="col-lg-7 photo"></div>
-                <div class="col-lg-4 warning">
+                <div class="col-xs-7 photo"></div>
+                <div class="col-xs-4 warning">
                     <h5>Lembrete:</h5>
                     <p>Lembre-se que só serão aceitos, participantes do concurso, as fotos e vídeos onde aparece o bebê junto da Pomada Bebê Hipoderme Ômega.</p>
                     <a href="#" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#uploadModal">Ok, entendi.</a>
@@ -436,7 +436,7 @@
                 {!! Form::open([
                     'id' => 'form-upload',
                     'method' => 'post',
-                    'class' => 'col-lg-12 form-upload',
+                    'class' => 'col-xs-12 form-upload',
                     'enctype' => 'multipart/form-data',
                     'url' => url('upload')
                     ])
@@ -490,13 +490,13 @@
 </div>
 <script src="{!! asset('assets/js/jquery.js') !!}"></script>
 <script src="{!! asset('assets/js/main.js') !!}"></script>
-@if (Session::has('message'))
+@if(Session::has('message'))
 <script>
 alert('{!! Session::get('message') !!}');
 </script>
 @endif
-@if(Auth::check() and Auth::getUser()->type == 1)
-<script src="{!! asset('assets/js/jquery.MultiFile.js')  !!}"></script>
+@if(Auth::check() and Auth::getUser()->type == 1 and $websiteSettings['registerOk'] == 1)
+<script src="{!! asset('assets/js/jquery.MultiFile.min.js')  !!}"></script>
 <script>
 $(function () {
     $("#form-upload").validate({

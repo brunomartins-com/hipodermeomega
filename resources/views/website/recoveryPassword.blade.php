@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container">
-    <div class="col-lg-12">
+    <div class="col-xs-12">
         @if (Session::has('success'))
         <br />
         <div class="alert alert-warning alert-dismissable">
@@ -30,8 +30,8 @@
         </div>
         @endif
     </div>
-    <div class="col-lg-7 col-lg-offset-1 text-pink font-size-16 strong">
-        <p class="col-lg-12">
+    <div class="col-xs-7 col-xs-offset-1 text-pink font-size-16 strong">
+        <p class="col-xs-12">
             Insira seu e-mail e uma nova senha para acesso
             <br />
             <br />
@@ -45,14 +45,14 @@
             ])
         !!}
         {!! Form::hidden('token', $token) !!}
-        <div class="col-lg-12">{!! Form::email('email', '', ['placeholder' => 'E-mail:', 'id' => 'email', 'maxlength' => '40']) !!}</div>
+        <div class="col-xs-12">{!! Form::email('email', '', ['placeholder' => 'E-mail:', 'id' => 'email', 'maxlength' => '40']) !!}</div>
         <div class="col-xs-12">
             <input type="password" id="password" name="password" maxlength="12" placeholder="Digite a nova senha...">
         </div>
         <div class="col-xs-12">
             <input type="password" id="password_confirmation" name="password_confirmation" maxlength="12" placeholder="..e confirme-a">
         </div>
-        <div class="col-lg-12 text-right">{!! Form::submit('Enviar') !!}</div>
+        <div class="col-xs-12 text-right">{!! Form::submit('Enviar') !!}</div>
         {!! Form::close() !!}
     </div>
 </div>

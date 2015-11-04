@@ -226,7 +226,7 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="form-input">
                                 {!! Form::label('websiteOk', 'Liberar Site') !!}
                                 <label class="css-input switch switch-primary">
@@ -235,7 +235,16 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="form-input">
+                                {!! Form::label('registerOk', 'Liberar Inscrições') !!}
+                                <label class="css-input switch switch-primary">
+                                    <input class="access" name="registerOk" id="registerOk" type="checkbox" value="1" @if($websiteSettings->registerOk == 1) checked @endif />
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="form-input">
                                 {!! Form::label('votingOk', 'Liberar Votação') !!}
                                 <label class="css-input switch switch-primary">
@@ -244,7 +253,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="form-input">
                                 {!! Form::label('winnersOk', 'Liberar Vencedores') !!}
                                 <label class="css-input switch switch-primary">
