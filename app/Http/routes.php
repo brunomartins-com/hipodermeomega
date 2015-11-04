@@ -52,6 +52,7 @@ Route::get('produtos-participantes', 'Website\ProductsController@index');
 ## REGISTRATION
 Route::get('inscricao', 'Website\RegistrationController@index');
 Route::post('inscricao', 'Auth\AuthController@postRegister');
+Route::get('inscricao/confirmacao/{token?}', 'Website\RegistrationController@getConfirmation');
 
 
 Route::group(['middleware' => 'guest'], function () {

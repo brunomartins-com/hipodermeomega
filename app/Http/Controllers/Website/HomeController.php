@@ -80,6 +80,10 @@ class HomeController extends Controller
 
                     $folder = 'assets/images/_upload/fotos/'.$userId.'/';
 
+                    if(!File::exists($folder)) {
+                        File::makeDirectory($folder, 0777);
+                    }
+
                     if(!empty($request->url) and ((substr_count($request->url,"http://") == 1 or substr_count($request->url,"https://") == 1)) and $quantityVideos == 0) {
                         $videoAdd = new Videos();
                         $videoAdd->usersId = $userId;
@@ -87,31 +91,33 @@ class HomeController extends Controller
                         $videoAdd->save();
                     }
 
-                    foreach ($request->photo as $file) {
-                        if(!is_null($file)) {
-                            if ($file->getSize() > 2048000 or $file->getSize() == 0) {
-                                $message = "As fotos não podem ser maiores que 2Mb!";
+                    if(!empty($request->file('photo'))) {
+                        foreach ($request->photo as $file) {
+                            if (!is_null($file)) {
+                                if ($file->getSize() > 2048000 or $file->getSize() == 0) {
+                                    $message = "As fotos não podem ser maiores que 2Mb!";
+                                    return redirect(url('/'))->with(compact('message'));
+                                } else {
+                                    $photoAdd = new Photos();
+                                    $photoAdd->usersId = $userId;
+
+                                    //IMAGE
+                                    $extension = $file->getClientOriginalExtension();
+                                    $nameImage = Carbon::now()->format('YmdHis') . "." . $extension;
+                                    Image::make($file)->resize(800, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($folder . $nameImage);
+                                    Image::make($file)->resize(null, 100, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($folder . "thumb_" . $nameImage);
+                                    $photoAdd->photo = $nameImage;
+
+                                    $photoAdd->save();
+                                }
+                            } else if (is_null($file) and empty($request->url)) {
+                                $message = "Envie pelo menos uma foto ou vídeo!";
                                 return redirect(url('/'))->with(compact('message'));
-                            } else {
-                                $photoAdd = new Photos();
-                                $photoAdd->usersId = $userId;
-
-                                //IMAGE
-                                $extension = $file->getClientOriginalExtension();
-                                $nameImage = Carbon::now()->format('YmdHis') . "." . $extension;
-                                Image::make($file)->resize(800, null, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->save($folder . $nameImage);
-                                Image::make($file)->resize(null, 100, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->save($folder . "thumb_" . $nameImage);
-                                $photoAdd->photo = $nameImage;
-
-                                $photoAdd->save();
                             }
-                        }else if(is_null($file) and empty($request->url)) {
-                            $message = "Envie pelo menos uma foto ou vídeo!";
-                            return redirect(url('/'))->with(compact('message'));
                         }
                     }
                     $message = "Mídias enviadas com sucesso!";

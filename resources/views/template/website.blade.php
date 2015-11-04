@@ -449,7 +449,11 @@
                 </div>
                 <label>
                     Fazer upload da imagem:
+                    @if(\App\Photos::quantityPhotosByUser(Auth::user()->id) == 5)
+                    {!! Form::file('photo[]', ['id' => 'photo', 'disabled' => 'disabled', 'class' => 'multi', 'accept' => 'gif|jpg|jpeg|png', 'maxfiles' => 5-\App\Photos::quantityPhotosByUser(Auth::user()->id)]) !!}
+                    @else
                     {!! Form::file('photo[]', ['id' => 'photo', 'class' => 'multi', 'accept' => 'gif|jpg|jpeg|png', 'maxfiles' => 5-\App\Photos::quantityPhotosByUser(Auth::user()->id)]) !!}
+                    @endif
                 </label>
                 <label>
                     Link do Instagram ou Youtube para vídeo

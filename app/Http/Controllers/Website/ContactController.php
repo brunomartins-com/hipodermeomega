@@ -37,6 +37,9 @@ class ContactController extends Controller
 
     public function post(Request $request)
     {
+        //WEBSITE SETTINGS
+        $websiteSettings = \App\Exceptions\Handler::readFile("websiteSettings.json");
+
         $this->validate($request, [
             'name'         => 'required|max:100',
             'email'        => 'required|email|max:40',
@@ -46,10 +49,10 @@ class ContactController extends Controller
         ]);
         array_set($request, "date", Carbon::now()->format('d/m/Y'));
 
-        Mail::send('template.emailContact', ['request' => $request], function ($message) {
+        Mail::send('template.emailContact', ['request' => $request], function ($message) use ($websiteSettings) {
             $message->from('webmaster@teuto.com.br', 'Teuto/Pfizer')
                 ->subject('Contato pelo Site [hipodermeomega.com.br]')
-                ->to('hello@brunomartins.com');
+                ->to($websiteSettings['email']);
         });
 
         $success = "Contato enviado com sucesso!";

@@ -8,6 +8,7 @@ use Mail;
 use App\Advertising;
 use App\Calls;
 use App\Pages;
+use App\User;
 
 class RegistrationController extends Controller
 {
@@ -34,24 +35,11 @@ class RegistrationController extends Controller
         return view('website.registration')->with(compact('page', 'websiteSettings', 'pages', 'advertising', 'calls', 'states'));
     }
 
-    public function post(Request $request)
+    public function getConfirmation(Request $request)
     {
-        $this->validate($request, [
-            'name'         => 'required|max:100',
-            'email'        => 'required|email|max:40',
-            'state'        => 'required',
-            'city'         => 'required',
-            'message'      => 'required'
-        ]);
-        array_set($request, "date", Carbon::now()->format('d/m/Y'));
+        User::where('token', '=', $request->token)->update(['active' => 1]);
 
-        Mail::send('template.emailContact', ['request' => $request], function ($message) {
-            $message->from('webmaster@teuto.com.br', 'Teuto/Pfizer')
-                ->subject('Contato pelo Site [hipodermeomega.com.br]')
-                ->to('hello@brunomartins.com');
-        });
-
-        $success = "Contato enviado com sucesso!";
-        return redirect(url('contato'))->with(compact('success'));
+        $message = "Cadastro confirmado com sucesso. Você já pode efetuar login enviar suas fotos e/ou vídeo e boa sorte!";
+        return redirect('/')->with(compact('message'));
     }
 }

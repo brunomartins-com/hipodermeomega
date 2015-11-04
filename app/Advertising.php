@@ -44,7 +44,12 @@ class Advertising extends Model {
                 $array = explode(".be/", $url);
                 return "http://img.youtube.com/vi/".substr($array[1],0,11)."/0.jpg";
             } else if($urlVideo['host'] == 'www.instagram.com' || $urlVideo['host'] == 'instagram.com'){
-                return $urlVideo['host']."/media";
+                if(substr($url, -1) == "/"){
+                    $complement = "media";
+                }else{
+                    $complement = "/media";
+                }
+                return $url.$complement;
             } else if($urlVideo['host'] == 'www.vimeo.com' || $urlVideo['host'] == 'vimeo.com'){
                 $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".substr($urlVideo['path'], 1).".php"));
                 return $hash[0]["thumbnail_small"];
