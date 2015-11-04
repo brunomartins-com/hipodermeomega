@@ -1,2 +1,23 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /recuperar-senha
+Disallow: /recuperar-senha/nova
+Disallow: /login
+Disallow: /profile
+Disallow: /photos
+Disallow: /videos
+Disallow: /upload
+Disallow: /sair
+Disallow: /newsletter
+Disallow: /cities
+Allow: /
+Allow: /o-concurso
+Allow: /regulamento
+Allow: /inscricao
+Allow: /premios
+Allow: /ganhadores-2014
+Allow: /produtos-participantes
+Allow: /contato
+Allow: /finalistas
+Allow: /vencedores
+sitemap: http://www.hipodermeomega.com.br/sitemap.xml
