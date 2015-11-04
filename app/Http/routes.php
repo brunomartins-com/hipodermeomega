@@ -14,6 +14,13 @@ Route::post('login', 'Auth\AuthController@postLoginWebsite');
 ## PROFILE
 Route::put('profile', 'Website\ProfileController@putUpdate');
 
+## PHOTOS AND VIDEO
+Route::post('photos', 'Website\HomeController@postSentPhotos');
+Route::post('video', 'Website\HomeController@postSentVideo');
+
+## UPLOAD
+Route::post('upload', 'Website\HomeController@postUpload');
+
 ## LOGOUT WEBSITE
 Route::get('sair', 'Auth\AuthController@getLogout');
 

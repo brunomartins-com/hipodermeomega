@@ -46,7 +46,7 @@
             <div class="col-lg-6 col-lg-offset-5">
                 @if(Auth::check() and Auth::getUser()->type == 1)
                 <a href="#" class="btn-logged btn-edit" data-toggle="modal" data-target="#profileModal" title="Editar meus dados">Editar meus dados</a>
-                <a href="#" class="btn-logged btn-upload" title="Upload foto/vídeo">Upload foto/vídeo</a>
+                <a href="#" class="btn-logged btn-upload" data-toggle="modal" data-target="#warningModal" title="Upload foto/vídeo">Upload foto/vídeo</a>
                 <a href="{{ url('sair') }}" class="btn-logged btn-logout" title="Sair">Sair</a>
                 @else
                 <a href="#" class="bg-white btn-login" data-toggle="modal" data-target="#loginModal" title="Fazer login">
@@ -407,6 +407,69 @@
         </div>
     </div>
 </div>
+<div id="warningModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Importante</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-lg-7 photo"></div>
+                <div class="col-lg-4 warning">
+                    <h5>Lembrete:</h5>
+                    <p>Lembre-se que só serão aceitos, participantes do concurso, as fotos e vídeos onde aparece o bebê junto da Pomada Bebê Hipoderme Ômega.</p>
+                    <a href="#" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#uploadModal">Ok, entendi.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body row">
+                {!! Form::open([
+                    'id' => 'form-upload',
+                    'method' => 'post',
+                    'class' => 'col-lg-12 form-upload',
+                    'enctype' => 'multipart/form-data',
+                    'url' => url('upload')
+                    ])
+                !!}
+                {!! Form::hidden('userId', Auth::user()->id) !!}
+                <div class="warning">
+                    O usuário tem o limite de 5 fotos e um vídeo. Para a avaliação do vídeo o usuário deverá fazer o upload do mesmo pelo Youtube ou Instagram e em seguinda copiar o link no campo abaixo.
+                    <br />
+                    <strong>Selecione bem as fotos e o vídeo antes de enviar, depois não tem como alterar.</strong>
+                </div>
+                <label>
+                    Fazer upload da imagem:
+                    {!! Form::file('photo[]', ['id' => 'photo', 'class' => 'multi', 'accept' => 'gif|jpg|jpeg|png', 'maxfiles' => 5-\App\Photos::quantityPhotosByUser(Auth::user()->id)]) !!}
+                </label>
+                <label>
+                    Link do Instagram ou Youtube para vídeo
+                    {!! Form::text('url', '', ['id' => 'url', 'placeholder' => 'http://', 'maxlength' => 255]) !!}
+                </label>
+                {!! Form::submit('Salvar') !!}
+                {!! Form::close() !!}
+                <div class="clear"></div>
+                <div class="photosList pull-left margin-left-25">
+                    <div class="photo photo1"></div>
+                    <div class="photo photo2"></div>
+                    <div class="photo photo3"></div>
+                    <div class="photo photo4"></div>
+                    <div class="photo photo5"></div>
+                </div>
+                <div class="video video1"></div>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -423,6 +486,28 @@
 </div>
 <script src="{!! asset('assets/js/jquery.js') !!}"></script>
 <script src="{!! asset('assets/js/main.js') !!}"></script>
+@if (Session::has('message'))
+<script>
+alert('{!! Session::get('message') !!}');
+</script>
+@endif
+@if(Auth::check() and Auth::getUser()->type == 1)
+<script src="{!! asset('assets/js/jquery.MultiFile.js')  !!}"></script>
+<script>
+$(function () {
+    $("#form-upload").validate({
+        rules: {
+            'url': {
+                url:true
+            }
+        },
+        messages: {
+            url:{ url:"O endereço do vídeo não é válido!" }
+        }
+    });
+});
+</script>
+@endif
 @yield('javascript')
 </body>
 </html>

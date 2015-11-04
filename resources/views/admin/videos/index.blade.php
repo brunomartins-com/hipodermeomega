@@ -72,7 +72,11 @@
                     @foreach($videos as $video)
                         <tr>
                             <td>{{ $video->created_at->format('d/m/Y H:i') }}</td>
-                            <td><img src="{{ $video->image }}" height="100" alt="{{ $video->babyName }}" /></td>
+                            <td>
+                                <a href="{{ $video->url }}" target="_blank" title="Visualizar Vídeo">
+                                    <img src="{{ $video->image }}" height="100" alt="{{ $video->babyName }}" />
+                                </a>
+                            </td>
                             <td>
                                 <span class="font-w600">
                                     {{ $video->babyName }}

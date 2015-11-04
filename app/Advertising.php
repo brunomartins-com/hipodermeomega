@@ -43,6 +43,8 @@ class Advertising extends Model {
             }else if($urlVideo['host'] == 'www.youtu.be' || $urlVideo['host'] == 'youtu.be'){
                 $array = explode(".be/", $url);
                 return "http://img.youtube.com/vi/".substr($array[1],0,11)."/0.jpg";
+            } else if($urlVideo['host'] == 'www.instagram.com' || $urlVideo['host'] == 'instagram.com'){
+                return $urlVideo['host']."/media";
             } else if($urlVideo['host'] == 'www.vimeo.com' || $urlVideo['host'] == 'vimeo.com'){
                 $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".substr($urlVideo['path'], 1).".php"));
                 return $hash[0]["thumbnail_small"];

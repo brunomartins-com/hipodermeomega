@@ -23,4 +23,8 @@ class Photos extends Model {
 
         return self::where('usersId', $userId)->delete();
     }
+
+    public static function quantityPhotosByUser($userId){
+        return self::where('usersId', '=', $userId)->count();
+    }
 }

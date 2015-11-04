@@ -19,4 +19,8 @@ class Videos extends Model {
 
         return self::where('usersId', $userId)->delete();
     }
+
+    public static function quantityVideosByUser($userId){
+        return self::where('usersId', '=', $userId)->count();
+    }
 }
