@@ -433,6 +433,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body row">
+                @if(\App\Photos::quantityPhotosByUser(Auth::user()->id) < 5 or \App\Videos::quantityVideosByUser(Auth::user()->id) == 0)
                 {!! Form::open([
                     'id' => 'form-upload',
                     'method' => 'post',
@@ -441,6 +442,13 @@
                     'url' => url('upload')
                     ])
                 !!}
+                @else
+                {!! Form::open([
+                    'id' => 'form-upload',
+                    'class' => 'col-xs-12 form-upload',
+                    ])
+                !!}
+                @endif
                 {!! Form::hidden('userId', Auth::user()->id) !!}
                 <div class="warning">
                     O usuário tem o limite de 5 fotos e um vídeo. Para a avaliação do vídeo o usuário deverá fazer o upload do mesmo pelo Youtube ou Instagram e em seguinda copiar o link no campo abaixo.
@@ -459,7 +467,11 @@
                     Link do Instagram ou Youtube para vídeo
                     {!! Form::text('url', '', ['id' => 'url', 'placeholder' => 'http://', 'maxlength' => 255]) !!}
                 </label>
+                @if(\App\Photos::quantityPhotosByUser(Auth::user()->id) == 5 and \App\Videos::quantityVideosByUser(Auth::user()->id) == 1)
+                {!! Form::button('Salvar', ['class' => 'btn-save', 'onclick' => 'alert(\'Você já enviou todas as fotos e vídeos!\')']) !!}
+                @else
                 {!! Form::submit('Salvar') !!}
+                @endif
                 {!! Form::close() !!}
                 <div class="clear"></div>
                 <div class="photosList pull-left margin-left-25">
