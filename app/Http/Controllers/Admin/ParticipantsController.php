@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Photos;
 use App\Videos;
+use App\UsersReceipts;
+use App\Advertising;
 
 class ParticipantsController extends Controller
 {
@@ -39,8 +41,15 @@ class ParticipantsController extends Controller
         }
 
         $user = User::where('id', '=', $usersId)->first();
+        $photos = Photos::where('usersId', '=', $usersId)->get();
+        $videos = Videos::where('usersId', '=', $usersId)->get();
+        foreach ($videos as $video) {
+            array_add($video, "image", Advertising::imageVideo($video->url));
+            array_set($video, "url", Advertising::embedVideo($video->url, 1));
+        }
+        $usersReceipts = UsersReceipts::where('usersId', '=', $usersId)->get();
 
-        return view('admin.participants.view')->with(compact('user'));
+        return view('admin.participants.view')->with(compact('user', 'photos', 'videos', 'usersReceipts'));
     }
 
     public function putStatus(Request $request)
@@ -65,6 +74,7 @@ class ParticipantsController extends Controller
 
         Photos::deletePhotosByUser($request->get('userId'));
         Videos::deleteVideosByUser($request->get('userId'));
+        UsersReceipts::deleteReceiptsByUser($request->get('userId'));
         User::find($request->get('userId'))->delete();
 
         $success = "Participante excluído com sucesso.";

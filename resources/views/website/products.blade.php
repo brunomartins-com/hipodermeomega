@@ -17,7 +17,7 @@
             Confira aqui os produtos participantes da promoção:
         </p>
         @foreach($products as $key => $product)
-        <div class="products @if($key == 2){{ 'margin-right-0 no-after' }}@endif">
+        <div class="products @if($key == 1){{ 'margin-right-0 no-after' }}@endif">
             <img src="{{ asset('assets/images/_upload/produtos/'.$product->image) }}" alt="{{ $product->title }}" />
             <strong>{{ $product->title }}</strong>
             <em>{{ $product->description }}</em>

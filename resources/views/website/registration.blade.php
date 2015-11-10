@@ -58,6 +58,13 @@
                 {!! Form::radio('babyGender', 'Feminino', false) !!}
             </label>
         </div>
+        <div class="col-xs-6">
+            {!! Form::label('birthCertificateFile', 'Anexar Certidão de Nascimento:') !!}
+            {!! Form::file('birthCertificateFile', ['title' => 'Anexar Certidão de Nascimento', 'id' => 'birthCertificateFile', 'accept' => 'image/*']) !!}
+        </div>
+        <div class="col-xs-6 padding-top-20">
+            <em class="font-size-11 normal margin-top-15 clear">*A imagem não pode ser maior que 2Mb</em>
+        </div>
 
         <div class="clear margin-bottom-55"></div>
 

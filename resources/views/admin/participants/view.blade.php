@@ -84,6 +84,16 @@
                             </div>
                         </div>
                     </div>
+                    @if(!empty($user->birthCertificate))
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-input">
+                                {!! Form::label('', 'Certidão de Nascimento: ') !!}
+                                <a href="{{ asset('assets/images/_upload/participantes/'.$user->birthCertificate) }}" target="_blank" class="btn btn-xs btn-info"><em class="fa fa-clipboard"></em> Ver</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-input">
@@ -166,6 +176,63 @@
                             </div>
                         </div>
                     </div>
+                    @if(count($photos) > 0)
+                    <br /><br />
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-input">
+                                <h3>FOTOS</h3>
+                                <ul>
+                                    @foreach($photos as $photo)
+                                    <li>
+                                        <a href="{{ asset('assets/images/_upload/fotos/'.$user->id.'/'.$photo->photo) }}" target="_blank" title="Ampliar">
+                                            <img src="{{ asset('assets/images/_upload/fotos/'.$user->id.'/thumb_'.$photo->photo) }}" alt="{{ $user->babyName }}" />
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    @if(count($videos) > 0)
+                    <br /><br />
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-input">
+                                <h3>VÍDEO</h3>
+                                <ul>
+                                    @foreach($videos as $video)
+                                    <li>
+                                        <a href="{{ $video->url }}" target="_blank" title="Ampliar">
+                                            <img src="{{ $video->image }}" alt="{{ $user->babyName }}" />
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    @if(count($usersReceipts) > 0)
+                    <br /><br />
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-input">
+                                <h3>CUPONS</h3>
+                                <ul>
+                                    @foreach($usersReceipts as $userReceipt)
+                                    <li>
+                                        <a href="{{ asset('assets/images/_upload/participantes/'.$userReceipt->receipt) }}" target="_blank" title="Ampliar">
+                                            <img src="{{ asset('assets/images/_upload/participantes/thumb_'.$userReceipt->receipt) }}" alt="{{ $user->babyName }}" />
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <div class="col-xs-12 push-30-t">
                             @if($user->active == 0)

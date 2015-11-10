@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\UsersReceipts;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,16 @@ class HomeController extends Controller
         return json_encode($video);
     }
 
+    public function postSentReceipts(Request $request)
+    {
+        $receipts = UsersReceipts::where('usersId', '=', $request->userId)
+            ->addSelect('usersId')
+            ->addSelect('receipt')
+            ->get();
+
+        return json_encode($receipts);
+    }
+
     public function postUpload(Request $request)
     {
         if(!empty($request->file('photo')) or !empty($request->url)){
@@ -103,7 +114,7 @@ class HomeController extends Controller
 
                                     //IMAGE
                                     $extension = $file->getClientOriginalExtension();
-                                    $nameImage = Carbon::now()->format('YmdHis') . "." . $extension;
+                                    $nameImage = Carbon::now()->format('YmdHis') . "_" . rand(0, 999999) . "." . $extension;
                                     Image::make($file)->resize(800, null, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->save($folder . $nameImage);
@@ -126,6 +137,65 @@ class HomeController extends Controller
             }
         }else{
             $message = "Envie pelo menos uma foto ou vídeo!";
+            return redirect(url('/'))->with(compact('message'));
+        }
+    }
+
+    public function postUploadReceipts(Request $request)
+    {
+        if(!empty($request->file('receipts')) or !empty($request->url)){
+            if(2 < count($request->file('receipts'))){
+                $message = "Você enviou mais cupons do que o permitido!";
+                return redirect(url('/'))->with(compact('message'));
+            }else{
+
+                $userId = Auth::user()->id;
+
+                $quantityReceipts = UsersReceipts::quantityReceiptsByUser($userId);
+                $quantityReceiptsAvailable = 2-$quantityReceipts;
+
+                if($quantityReceiptsAvailable < count($request->file('receipts'))){
+                    $message = "Você enviou mais cupons do que o permitido!";
+                    return redirect(url('/'))->with(compact('message'));
+                }else{
+
+                    $folder = 'assets/images/_upload/participantes/';
+
+                    if(!empty($request->file('receipts'))) {
+                        foreach ($request->receipts as $file) {
+                            if (!is_null($file)) {
+                                if ($file->getSize() > 2048000 or $file->getSize() == 0) {
+                                    $message = "As imagens dos cupons não podem ser maiores que 2Mb!";
+                                    return redirect(url('/'))->with(compact('message'));
+                                } else {
+                                    $receiptAdd = new UsersReceipts();
+                                    $receiptAdd->usersId = $userId;
+
+                                    //IMAGE
+                                    $extension = $file->getClientOriginalExtension();
+                                    $nameImage = Carbon::now()->format('YmdHis') . "_" . rand(0, 999999) . "." . $extension;
+                                    Image::make($file)->resize(800, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($folder . $nameImage);
+                                    Image::make($file)->resize(null, 231, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($folder . "thumb_" . $nameImage);
+                                    $receiptAdd->receipt = $nameImage;
+
+                                    $receiptAdd->save();
+                                }
+                            } else if (is_null($file)) {
+                                $message = "Envie pelo menos um cupom!";
+                                return redirect(url('/'))->with(compact('message'));
+                            }
+                        }
+                    }
+                    $message = "Cupons enviados com sucesso!";
+                    return redirect(url('/'))->with(compact('message'));
+                }
+            }
+        }else{
+            $message = "Envie pelo menos um cupom!";
             return redirect(url('/'))->with(compact('message'));
         }
     }

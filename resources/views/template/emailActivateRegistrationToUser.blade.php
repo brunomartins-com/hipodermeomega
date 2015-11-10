@@ -7,7 +7,7 @@
     <br /><br />
     Para confirmá-lo basta clicar no link abaixo.
     <br /><br />
-    <a href="{{ url('/inscricao/confirmacao/'.md5($request->type.$request->email)) }}"><strong>CONFIRMAR CADASTRO</strong></a>
+    <a href="http://hipodermeomega.com.br/inscricao/confirmacao/{{ md5($request->type.$request->email) }}"><strong>CONFIRMAR CADASTRO</strong></a>
     <br /><br />Atenciosamente
     <br />
     <img src="{{ url('assets/images/logotype-teuto.png') }}" alt="Teuto/Pfizer" />

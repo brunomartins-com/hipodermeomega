@@ -42,11 +42,11 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-
         return Validator::make($data, [
             'babyName' => 'required|max:100',
             'babyBirthdate' => 'required',
             'babyGender' => 'required',
+            'birthCertificateFile' => 'required|mimes:jpeg,gif,bmp,png',
             'name' => 'required|max:100',
             'rg' => 'required',
             'cpf' => 'required|min:14|max:14|unique:users',
@@ -68,6 +68,8 @@ class AuthController extends Controller
             'babyName.max'              => 'O nome do bebê não deve ser maior que :max caracteres',
             'babyBirthdate.required'    => 'A data de nascimento do bebê é obrigatória',
             'babyGender.required'       => 'O sexo do bebê é obrigatório',
+            'birthCertificateFile.required' => 'Envie a certidão de nascimento do bebê',
+            'birthCertificateDile.mimes'    => 'O formato da imagem da certidão de nascimento é inválido',
             'name.required'             => 'O nome do responsável é obrigatório',
             'name.max'                  => 'O nome do responsável não deve ser maior que :max caracteres',
             'rg.required'               => 'O RG é obrigatório',
@@ -110,6 +112,7 @@ class AuthController extends Controller
             'babyName' => $data['babyName'],
             'babyBirthdate' => Carbon::createFromFormat('d/m/Y', $data['babyBirthdate'])->format('Y-m-d'),
             'babyGender' => $data['babyGender'],
+            'birthCertificate' => $data['birthCertificate'],
             'name' => $data['name'],
             'rg' => $data['rg'],
             'cpf' => $data['cpf'],

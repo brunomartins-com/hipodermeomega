@@ -24,6 +24,8 @@ class Advertising extends Model {
                 return 'http://player.vimeo.com/video/'.self::idVimeo($url).'?title=0&amp;byline=0&amp;portrait=0&amp;autoplay='.$play;
             } else if($urlVideo['host'] == 'www.soundcloud.com' || $urlVideo['host'] == 'soundcloud.com'){
                 return 'https://w.soundcloud.com/player/?url='.$url.'&amp;auto_play='.$play.'';
+            } else if($urlVideo['host'] == 'www.instagram.com' || $urlVideo['host'] == 'instagram.com'){
+                return $url;
             }
         } catch (\Exception $e) {
             throw new \Exception("Error open URL: " . $e->getMessage());

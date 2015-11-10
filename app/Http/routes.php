@@ -17,9 +17,11 @@ Route::put('profile', 'Website\ProfileController@putUpdate');
 ## PHOTOS AND VIDEO
 Route::post('photos', 'Website\HomeController@postSentPhotos');
 Route::post('video', 'Website\HomeController@postSentVideo');
+Route::post('receipts', 'Website\HomeController@postSentReceipts');
 
 ## UPLOAD
 Route::post('upload', 'Website\HomeController@postUpload');
+Route::post('upload-cupons', 'Website\HomeController@postUploadReceipts');
 
 ## LOGOUT WEBSITE
 Route::get('sair', 'Auth\AuthController@getLogout');

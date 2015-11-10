@@ -418,7 +418,7 @@
                 <div class="col-xs-7 photo"></div>
                 <div class="col-xs-4 warning">
                     <h5>Lembrete:</h5>
-                    <p>Lembre-se que só serão aceitos, participantes do concurso, as fotos e vídeos onde aparece o bebê junto da Pomada Bebê Hipoderme Ômega.</p>
+                    <p>Só serão aceitos no concurso, as fotos e vídeos onde apareça o bebê junto aos produtos participantes da promoção.</p>
                     <a href="#" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#uploadModal">Ok, entendi.</a>
                 </div>
             </div>
@@ -451,9 +451,9 @@
                 @endif
                 {!! Form::hidden('userId', Auth::user()->id) !!}
                 <div class="warning">
-                    O usuário tem o limite de 5 fotos e um vídeo. Para a avaliação do vídeo o usuário deverá fazer o upload do mesmo pelo Youtube ou Instagram e em seguinda copiar o link no campo abaixo.
+                    Você tem o limite de 5 fotos e 1 vídeo de EXATOS 15 segundos. Para o envio  do vídeo você deverá fazer o upload do mesmo no Youtube ou Instagram e em seguinda copiar o link no campo abaixo.
                     <br />
-                    <strong>Selecione bem as fotos e o vídeo antes de enviar, depois não tem como alterar.</strong>
+                    <strong>Atenção, selecione bem as fotos e o vídeo antes de enviar, pois não há como alterar depois de enviado.</strong>
                 </div>
                 <label>
                     Fazer upload da imagem:
@@ -482,6 +482,46 @@
                     <div class="photo photo5"></div>
                 </div>
                 <div class="video video1"></div>
+                <div class="clear"></div>
+                @if(\App\Photos::quantityPhotosByUser(Auth::user()->id) < 5 or \App\Videos::quantityVideosByUser(Auth::user()->id) == 0)
+                {!! Form::open([
+                    'id' => 'form-receipts',
+                    'method' => 'post',
+                    'class' => 'col-xs-12 form-upload',
+                    'enctype' => 'multipart/form-data',
+                    'url' => url('upload-cupons')
+                    ])
+                !!}
+                @else
+                    {!! Form::open([
+                        'id' => 'form-receipts',
+                        'class' => 'col-xs-12 form-upload',
+                        ])
+                    !!}
+                @endif
+                <div class="warning margin-top-20">
+                    Para concluir o cadastro das fotos e/ou vídeo, faça o upload da imagem do cupom fiscal.
+                    Atenção: cada produto equivale a participação de 1 categoria.
+                </div>
+                <label class="pull-left">
+                    Fazer upload da imagem:
+                    @if(\App\UsersReceipts::quantityReceiptsByUser(Auth::user()->id) == 2)
+                    {!! Form::file('receipts[]', ['id' => 'receipts', 'disabled' => 'disabled', 'class' => 'multi', 'accept' => 'gif|jpg|jpeg|png', 'maxfiles' => 2-\App\UsersReceipts::quantityReceiptsByUser(Auth::user()->id)]) !!}
+                    @else
+                    {!! Form::file('receipts[]', ['id' => 'receipts', 'class' => 'multi', 'accept' => 'gif|jpg|jpeg|png', 'maxfiles' => 2-\App\UsersReceipts::quantityReceiptsByUser(Auth::user()->id)]) !!}
+                    @endif
+                </label>
+                @if(\App\UsersReceipts::quantityReceiptsByUser(Auth::user()->id) == 2)
+                {!! Form::button('Salvar', ['class' => 'btn-save pull-left margin-top-40', 'onclick' => 'alert(\'Você já enviou todos os cupons!\')']) !!}
+                @else
+                {!! Form::submit('Salvar', ['class' => 'pull-left margin-top-40']) !!}
+                @endif
+                <div class="receiptsList pull-left margin-left-25 margin-top-15">
+                    <div class="receipt receipt1"><span>Cupom</span></div>
+                    <div class="receipt receipt2"><span>Cupom</span></div>
+                </div>
+
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
