@@ -1,5 +1,6 @@
 var elixir = require('laravel-elixir');
-
+//var minify = require('gulp-minify');
+//var uglify = require('gulp-uglify');
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,9 +15,21 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
 
  // WEBSITE
- mix.copy( "resources/assets/images/**", "public/assets/images/");
- mix.sass(['main.scss'], 'public/assets/css/main.css');
+ //mix.copy("resources/assets/images/**", "public/assets/images/");
+ mix.sass(['main.scss'], 'public/assets/css/bootstrap.min.css');
+ mix.sass(['custom.scss'], 'public/assets/css/main.css');
  mix.scripts(['**'], 'public/assets/js/main.js');
+
+ /*
+ mix.task('compress', function() {
+     gulp.src('assets/*.js')
+         .pipe(minify({
+             exclude: ['tasks'],
+             ignoreFiles: ['.combo.js', '-min.js']
+         }))
+         .pipe(gulp.dest('public/assets/js/main.js'))
+ });*/
+
 
  // ADMIN
  mix.styles([

@@ -14,12 +14,27 @@ Contact: hello@brunomartins.com
     <meta charset="UTF-8">
     <meta name="format-detection" content="telephone=no" />
     <title>@yield('title'){{ $websiteSettings['title'] }}</title>
-    <link href="{!! asset('assets/images/_upload/dados-do-site/'.$websiteSettings['favicon']) !!}" rel="shortcut icon" />
-    <link href="{{ asset('assets/images/_upload/dados-do-site/'.$websiteSettings['appleTouchIcon']) }}" rel="apple-touch-icon" />
-    <link href="{!! asset('assets/css/main.css') !!}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{!! asset('assets/images/_upload/dados-do-site/'.$websiteSettings['favicon']) !!}" />
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/_upload/dados-do-site/'.$websiteSettings['appleTouchIcon']) }}" />
     {!! $websiteSettings['googleAnalytics'] !!}
     <!-- Meta Tags -->
     <meta name="title" content="@yield('title'){{ $websiteSettings['title'] }}" />
+    <meta name="google-site-verification" content="aRX4Wog1V1joWwy8oTieuz47QiwOAaJc59XDQ-vmGXU" />
+    <meta name="verify-v1" content="aRX4Wog1V1joWwy8oTieuz47QiwOAaJc59XDQ-vmGXU" />
+    <meta name="geography" content="Brazil">
+    <meta name="language" content="Português Brasil">
+    <meta name="revisit-after" content="30 days">
+    <meta name="distribution" content="Brasil">
+    <meta name="country" content="Brasil, BRA">
+    <meta property="og:determiner" content="brasil">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="robots" content="index,follow">
+    <meta name="location" content="Anápolis,Goiás">
+    <meta name="rating" content="General">
+    <meta name="author" content="Teuto | Pfizer">
+    <meta name="geo.position" content="GO">
+    <meta name="geo.placename" content="Anápolis">
+    <meta name="geo.region" content="br">
     <!-- Tags Facebook -->
     <meta property="og:title" content="@yield('title'){{ $websiteSettings['title'] }}" />
     <meta property="og:type" content="website" />
@@ -545,15 +560,20 @@ Contact: hello@brunomartins.com
         </div>
     </div>
 </div>
-<script src="{!! asset('assets/js/jquery.js') !!}"></script>
-<script src="{!! asset('assets/js/main.js') !!}"></script>
+<link rel="stylesheet" href="{!! asset('assets/css/bootstrap.min.css') !!}" />
+<link rel="stylesheet" href="{!! asset('assets/css/main.css') !!}" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chewy" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Londrina+Solid" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic" />
+<script type="text/javascript" src="{!! asset('assets/js/jquery.min.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/js/main.min.js') !!}"></script>
 @if(Session::has('message'))
 <script>
 alert('{!! Session::get('message') !!}');
 </script>
 @endif
 @if(Auth::check() and Auth::getUser()->type == 1 and $websiteSettings['registerOk'] == 1)
-<script src="{!! asset('assets/js/jquery.MultiFile.min.js')  !!}"></script>
+<script type="text/javascript" src="{!! asset('assets/js/jquery.MultiFile.min.js')  !!}"></script>
 <script>
 $(function () {
     $("#form-upload").validate({
